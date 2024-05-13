@@ -60,7 +60,7 @@ fn stop_pb(
             let new = min(downloaded + s, total_size);
             downloaded = new;
             pb.set_position(new);
-            if total_size - downloaded >= speed * 2 {
+            if total_size - downloaded >= speed * 3 {
                 s = speed;
                 wait = 12;
             } else {
@@ -77,7 +77,7 @@ fn stop_pb(
 
 fn main() {
     let mut m = MultiProgress::new();
-    let template = "{spinner:.green} [{elapsed_precise}] {msg} {percent_precise:>7}% [{bar:20.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})";
+    let template = "{spinner:.green} [{elapsed_precise}] {msg} {percent:>3}% [{bar:20.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})";
     let h1 = pure_pb(&mut m, template, "contents 1", 1000, 1, None);
     thread::sleep(Duration::from_millis(500));
     let h2 = pure_pb(&mut m, template, "contents 2", 1000, 10, Some("|:_"));
